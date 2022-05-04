@@ -8,11 +8,11 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.5.7</version>
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>tfmtstreactive</artifactId>
+    <groupId>es.upm.miw</groupId>
+    <artifactId>lost-found-spring</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>tfmtstreactive</name>
-    <description>tfmtstreactive</description>
+    <name>lost-found-spring</name>
+    <description>lost-found-spring</description>
     <packaging>jar</packaging>
     <properties>
         <!-- Encode -->
