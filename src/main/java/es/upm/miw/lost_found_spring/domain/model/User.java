@@ -11,33 +11,42 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
 public class User {
+    private String id;
     @NotBlank
     private String userName;
     @NotBlank
-    private String familyName;;
+    private String familyName;
 
+    @NotBlank
     @Indexed(unique = true)
     private String email;
-
+    @NotBlank
     private String password;
     private Role role;
     private LocalDateTime registrationDate;
     private String photo;
 
+    private int mobile;
+    @NotBlank
+    private String location;
+
     public void doDefault() {
-            if (Objects.isNull(password)) {
-                password = UUID.randomUUID().toString();
-            }
-            if (Objects.isNull(role)) {
-                this.role = Role.OPERATOR;
-            }
+        if (Objects.isNull(registrationDate)) {
+            registrationDate = LocalDateTime.now();
         }
+        if (Objects.isNull(role)) {
+            this.role = Role.CUSTOMER;
+        }
+
+        if (Objects.isNull(photo)) {
+            photo = "";
+        }
+    }
 
 }

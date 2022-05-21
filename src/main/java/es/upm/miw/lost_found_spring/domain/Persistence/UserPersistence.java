@@ -7,9 +7,10 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface UserPersistence {
 
-    //Mono<User> readByUserName(String userName);
 
     Mono<User> findByEmail(String email);
 
     Mono<User> create(User user);
+
+    Mono<User> update(String email, User dataArticle);
 }
