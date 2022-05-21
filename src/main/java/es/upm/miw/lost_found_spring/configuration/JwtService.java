@@ -42,7 +42,7 @@ public class JwtService {
                 .withIssuer(this.issuer)
                 .withIssuedAt(new Date())
                 .withNotBefore(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + this.expire * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + this.expire * 1000L))
                 .withClaim(USER_CLAIM, userName)
                 .withClaim(EMAIL_CLAIM, email)
                 .withClaim(ROLE_CLAIM, role)

@@ -27,12 +27,14 @@ public class DatabaseSeederDev {
     }
 
     public void deleteAllAndInitializeAndSeedDataBase() {
+
         this.deleteAllAndInitialize();
         this.seedDataBaseJava();
     }
 
     private void deleteAllAndInitialize() {
         LogManager.getLogger(this.getClass()).warn("------- Delete All -------");
+       // this.userDao.deleteAll();
         this.databaseStarting.initialize();
     }
 
@@ -42,7 +44,7 @@ public class DatabaseSeederDev {
         UserEntity[] users = {
                 UserEntity.builder().userName("110").email("10").familyName("Name1")
                         .password(pass)
-                        .role(Role.OPERATOR).registrationDate(LocalDateTime.now()).build()
+                        .role(Role.CUSTOMER).registrationDate(LocalDateTime.now()).build()
         };
         this.userDao.saveAll(Arrays.asList(users));
         LogManager.getLogger(this.getClass()).warn("        ------- users");

@@ -1,7 +1,7 @@
 package es.upm.miw.lost_found_spring.infrastructure.api.http_errors;
 
 public enum Role {
-    ADMIN, OPERATOR, AUTHENTICATED;
+    ADMIN, AUTHENTICATED, CUSTOMER;
 
     public static final String PREFIX = "ROLE_";
 
