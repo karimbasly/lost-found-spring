@@ -20,19 +20,21 @@ public class UserEntity {
     @Generated
     private String id;
     @NonNull
-    @Indexed(unique = true)
     private String userName;
     @NonNull
     private String familyName;
-
+    @NonNull
     @Indexed(unique = true)
     private String email;
     @NonNull
     private String password;
-
-    private String photo;
     private Role role;
     private LocalDateTime registrationDate;
+    private String photo;
+
+    private int mobile;
+    private String location;
+
 
     public User toUser() {
         User user = new User();
