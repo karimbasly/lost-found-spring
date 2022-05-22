@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
@@ -65,10 +66,23 @@ public class UserPersistenceMongodb implements UserPersistence {
                 .map(UserEntity::toUser);
     }
 
+    @Override
+    public Flux<User> findByNameAndEmailAndLocalisationNullSafe(String userName, String email, Integer mobile, String location) {
+        return this.userReactive.findByNameAndEmailAndLocalisationNullSafe(userName, email, mobile, location)
+                .map(UserEntity::toUser);
+    }
+
+    @Override
+    public Mono<Void> delete(String email) {
+        return this.userReactive.findByEmail(email)
+                .switchIfEmpty(Mono.error(new NotFoundException("Non existent email: " + email)))
+                .then(this.userReactive.deleteByEmail(email));
+    }
+
     private Mono<Void> assertEmailNotExist(String email) {
         return this.userReactive.findByEmail(email)
-                .flatMap(articleEntity -> Mono.error(
-                        new ConflictException("Article Email already exists : " + email)
+                .flatMap(userEntity -> Mono.error(
+                        new ConflictException("user Email already exists : " + email)
                 ));
     }
 }

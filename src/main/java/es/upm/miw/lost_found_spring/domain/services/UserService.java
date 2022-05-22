@@ -7,6 +7,8 @@ import es.upm.miw.lost_found_spring.domain.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -42,9 +44,18 @@ public class UserService {
     public Mono<User> update(String email, User user) {
         return this.userPersistence.findByEmail(email)
                 .map(dataArticle -> {
+                    user.setPhoto(user.getPhoto());
                     BeanUtils.copyProperties(user, dataArticle, "registrationDate");
                     return dataArticle;
                 }).flatMap(dataArticle -> this.userPersistence.update(email, dataArticle));
+    }
+
+    public Flux<User> findByNameAndEmailAndLocalisationNullSafe(String userName, String email, Integer mobile, String location) {
+        return this.userPersistence.findByNameAndEmailAndLocalisationNullSafe(userName, email, mobile, location);
+    }
+
+    public Mono<Void> delete(@PathVariable String email) {
+        return this.userPersistence.delete(email);
     }
 }
 

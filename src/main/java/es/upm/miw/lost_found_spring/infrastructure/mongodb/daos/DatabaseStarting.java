@@ -19,7 +19,6 @@ public class DatabaseStarting {
     private static final String ADMIN = "admin";
     private static final String USERNAME = "admin@admin.admin";
     private static final String TEST = "test@test.test";
-    private static final String PASSWORD = "admin";
     private static final String NAME = "karim";
 
 
@@ -34,7 +33,8 @@ public class DatabaseStarting {
         if (this.userDao.findByRoleIn(List.of(Role.ADMIN)).isEmpty()) {
             UserEntity user = UserEntity.builder().userName(NAME).familyName(NAME)
                     .email(USERNAME)
-                    .password(new BCryptPasswordEncoder().encode(PASSWORD)).photo("").mobile(12345678).location("Madrid")
+                    .password(new BCryptPasswordEncoder().encode("admin")).photo("../assets/images/empty.jpg")
+                    .mobile(12345678).location("Madrid")
                     .role(Role.ADMIN).registrationDate(LocalDateTime.now()).build();
             UserEntity user1 = UserEntity.builder().userName(NAME).familyName(NAME)
                     .email(TEST)

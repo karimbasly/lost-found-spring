@@ -32,7 +32,7 @@ public class UserEntity {
     private LocalDateTime registrationDate;
     private String photo;
 
-    private int mobile;
+    private Integer mobile;
     private String location;
 
 
