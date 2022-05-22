@@ -1,6 +1,7 @@
 package es.upm.miw.lost_found_spring.domain.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import es.upm.miw.lost_found_spring.infrastructure.api.http_errors.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,10 +30,11 @@ public class User {
     @NotBlank
     private String password;
     private Role role;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registrationDate;
     private String photo;
 
-    private int mobile;
+    private Integer mobile;
     @NotBlank
     private String location;
 
@@ -49,4 +51,14 @@ public class User {
         }
     }
 
+    public static User ofNameEmailMobile(User user) {
+        return User.builder()
+                .email(user.getEmail())
+                .userName(user.getUserName())
+                .familyName(user.getFamilyName())
+                .mobile(user.getMobile())
+                .location(user.getLocation())
+                .role(user.getRole())
+                .build();
+    }
 }

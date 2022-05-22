@@ -1,10 +1,13 @@
 package es.upm.miw.lost_found_spring.infrastructure.api.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import es.upm.miw.lost_found_spring.domain.model.User;
 import es.upm.miw.lost_found_spring.infrastructure.api.http_errors.Role;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
-
 
 import java.time.LocalDateTime;
 
@@ -18,21 +21,25 @@ public class UserDto {
     private String userName;
     private String familyName;
     private String email;
-    private String password;
+    private Integer mobile;
+    private String location;
     private Role role;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime registrationDate;
 
-public UserDto (User user){
-    BeanUtils.copyProperties(user,this);
-}
-    public static UserDto  toUser(User user) {
-    return UserDto.builder()
-            .userName(user.getUserName())
-            .familyName(user.getFamilyName())
-            .email(user.getEmail())
-            .role(user.getRole())
-            .password(user.getPassword())
-            .registrationDate(user.getRegistrationDate())
-            .build();
+    public UserDto(User user) {
+        BeanUtils.copyProperties(user, this);
+    }
+
+    public static UserDto ofNameEmailMobile(User user) {
+        return UserDto.builder()
+                .email(user.getEmail())
+                .userName(user.getUserName())
+                .familyName(user.getFamilyName())
+                .mobile(user.getMobile())
+                .location(user.getLocation())
+                .registrationDate(user.getRegistrationDate())
+                .role(user.getRole())
+                .build();
     }
 }
