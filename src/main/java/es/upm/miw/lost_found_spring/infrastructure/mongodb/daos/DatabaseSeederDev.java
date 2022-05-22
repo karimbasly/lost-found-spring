@@ -15,8 +15,8 @@ import java.util.List;
 public class DatabaseSeederDev {
     // private RepoDao repoDao;
 
-    private DatabaseStarting databaseStarting;
-    private UserDao userDao;
+    private final DatabaseStarting databaseStarting;
+    private final UserDao userDao;
 
     @Autowired
     public DatabaseSeederDev(DatabaseStarting databaseStarting, UserDao userDao) {

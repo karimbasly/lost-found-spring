@@ -17,7 +17,7 @@ import java.util.List;
 @Service("reactiveUserDetailsService")
 public class UserDetailsServiceImpl implements ReactiveUserDetailsService {
 
-    private UserPersistence userPersistence;
+    private final UserPersistence userPersistence;
 
     @Autowired
     public UserDetailsServiceImpl(UserPersistence userPersistence) {

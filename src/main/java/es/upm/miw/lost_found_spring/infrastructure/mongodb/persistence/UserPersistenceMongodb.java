@@ -16,20 +16,12 @@ import reactor.core.publisher.Mono;
 @Repository
 public class UserPersistenceMongodb implements UserPersistence {
 
-    private UserReactive userReactive;
+    private final UserReactive userReactive;
 
     @Autowired
     public UserPersistenceMongodb(UserReactive userReactive) {
         this.userReactive = userReactive;
     }
-/*
-    @Override
-    public Mono<User> readByUserName(String userName) {
-        return this.userReactive.findByUserName(userName)
-                .switchIfEmpty(Mono.error(new NotFoundException("Non existent user: " + userName)))
-                .map(UserEntity::toUser);
-    }
-*/
     @Override
     public Mono<User> findByEmail(String email) {
         return this.userReactive.findByEmail(email)

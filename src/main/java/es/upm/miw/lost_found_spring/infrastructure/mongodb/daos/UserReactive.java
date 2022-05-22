@@ -8,7 +8,6 @@ import reactor.core.publisher.Mono;
 
 
 public interface UserReactive extends ReactiveSortingRepository<UserEntity, String> {
-    //Mono<UserEntity> findByUserName(String userName);
 
 
     Mono<UserEntity> findByEmail(String email);
