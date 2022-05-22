@@ -15,8 +15,8 @@ import java.util.List;
 public class DatabaseSeederDev {
     // private RepoDao repoDao;
 
-    private DatabaseStarting databaseStarting;
-    private UserDao userDao;
+    private final DatabaseStarting databaseStarting;
+    private final UserDao userDao;
 
     @Autowired
     public DatabaseSeederDev(DatabaseStarting databaseStarting, UserDao userDao) {
@@ -42,7 +42,8 @@ public class DatabaseSeederDev {
         LogManager.getLogger(this.getClass()).warn("------- Initial Load from JAVA --------");
         String pass = new BCryptPasswordEncoder().encode("9");
         UserEntity[] users = {
-                UserEntity.builder().userName("110").email("10").familyName("Name1")
+                UserEntity.builder().userName("abc").email("karim@a.a").familyName("Name1")
+                        .mobile(12365).location("Madrid")
                         .password(pass)
                         .role(Role.CUSTOMER).registrationDate(LocalDateTime.now()).build(),
         };

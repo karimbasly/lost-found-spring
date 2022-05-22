@@ -24,7 +24,7 @@ public class UserResource {
     public static final String SEARCH = "/search";
     public static final String EMAIL = "/{email}";
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserResource(UserService userService) {
@@ -48,7 +48,7 @@ public class UserResource {
 
 
     @GetMapping(EMAIL)
-    public Mono<User> GetUser(@PathVariable String email) {
+    public Mono<User> GetUserByEmail(@PathVariable String email) {
         return this.userService.readByEmail(email);
     }
 
