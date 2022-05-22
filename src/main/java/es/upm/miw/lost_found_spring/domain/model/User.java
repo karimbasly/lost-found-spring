@@ -52,15 +52,4 @@ public class User {
             photo = "";
         }
     }
-
-    public static User ofNameEmailMobile(User user) {
-        return User.builder()
-                .email(user.getEmail())
-                .userName(user.getUserName())
-                .familyName(user.getFamilyName())
-                .mobile(user.getMobile())
-                .location(user.getLocation())
-                .role(user.getRole())
-                .build();
-    }
 }

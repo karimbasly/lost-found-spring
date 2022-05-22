@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 public class UserService {
 
 
-    private UserPersistence userPersistence;
-    private JwtService jwtService;
+    private final UserPersistence userPersistence;
+    private final JwtService jwtService;
 
     @Autowired
     public UserService(UserPersistence userPersistence, JwtService jwtService) {
