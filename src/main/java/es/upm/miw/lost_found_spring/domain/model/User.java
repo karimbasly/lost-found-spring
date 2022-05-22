@@ -2,6 +2,7 @@ package es.upm.miw.lost_found_spring.domain.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import es.upm.miw.lost_found_spring.infrastructure.api.http_errors.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +18,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
     private String id;
     @NotBlank
