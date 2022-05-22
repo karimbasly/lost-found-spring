@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 
@@ -27,9 +26,6 @@ public class UserDto {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime registrationDate;
 
-    public UserDto(User user) {
-        BeanUtils.copyProperties(user, this);
-    }
 
     public static UserDto ofNameEmailMobile(User user) {
         return UserDto.builder()

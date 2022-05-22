@@ -44,7 +44,7 @@ public class PdfCoreBuilder {
 
     private final String filename;
 
-    private Document document;
+    private final Document document;
 
     public PdfCoreBuilder(String path, String file) {
         path = System.getProperty(USER_HOME) + path;

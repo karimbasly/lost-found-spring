@@ -14,12 +14,16 @@ import java.util.List;
 @Repository
 public class DatabaseStarting {
 
-    private UserDao userDao;
+    private final UserDao userDao;
 
     private static final String ADMIN = "admin";
+    private static final String TEST_PAS = "test";
     private static final String USERNAME = "admin@admin.admin";
     private static final String TEST = "test@test.test";
     private static final String NAME = "karim";
+    private static final String VARIOUS_LOCATION = "Madrid";
+    private static final Integer POINT_MOBILE = 645490418;
+    private static final Integer POINT_MOBILE1 = 645490416;
 
 
     @Autowired
@@ -31,17 +35,18 @@ public class DatabaseStarting {
     void initialize() {
         LogManager.getLogger(this.getClass()).warn("------- Finding Admin -----------");
         if (this.userDao.findByRoleIn(List.of(Role.ADMIN)).isEmpty()) {
-            UserEntity user = UserEntity.builder().userName(NAME).familyName(NAME)
+            UserEntity[] users = {UserEntity.builder().userName(NAME).familyName(NAME)
                     .email(USERNAME)
-                    .password(new BCryptPasswordEncoder().encode("admin")).photo("../assets/images/empty.jpg")
-                    .mobile(12345678).location("Madrid")
-                    .role(Role.ADMIN).registrationDate(LocalDateTime.now()).build();
-            UserEntity user1 = UserEntity.builder().userName(NAME).familyName(NAME)
-                    .email(TEST)
-                    .password(new BCryptPasswordEncoder().encode("test")).photo("").mobile(12345678).location("Madrid")
-                    .role(Role.CUSTOMER).registrationDate(LocalDateTime.now()).build();
-            this.userDao.save(user);
-            this.userDao.save(user1);
+                    .password(new BCryptPasswordEncoder().encode(ADMIN))
+                    .mobile(POINT_MOBILE1).location(VARIOUS_LOCATION)
+                    .photo("")
+                    .role(Role.ADMIN).registrationDate(LocalDateTime.now()).build(),
+                    UserEntity.builder().userName(NAME).familyName(NAME)
+                            .email(TEST)
+                            .password(new BCryptPasswordEncoder().encode(TEST_PAS)).photo("").mobile(POINT_MOBILE).location(VARIOUS_LOCATION)
+                            .role(Role.CUSTOMER).registrationDate(LocalDateTime.now()).build(),
+            };
+            this.userDao.saveAll(List.of(users));
             LogManager.getLogger(this.getClass()).warn("------- Created Admin -----------");
         }
     }
