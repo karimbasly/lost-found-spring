@@ -2,11 +2,10 @@ package es.upm.miw.lost_found_spring.infrastructure.api.resources;
 
 import es.upm.miw.lost_found_spring.domain.model.Announcement;
 import es.upm.miw.lost_found_spring.domain.services.AnnouncementService;
+import es.upm.miw.lost_found_spring.infrastructure.api.dtos.AnnouncementDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
@@ -16,6 +15,9 @@ import javax.validation.Valid;
 public class AnnouncementResource {
     public static final String ANNOUNCEMENT = "/Announcements";
     public static final String SEARCH = "/search";
+    public static final String ID_ID = "/{id}";
+    public static final String USER_EMAIL = "/{userEmail}";
+    public static final String USERS = "/user";
 
 
     private final AnnouncementService announcementService;
@@ -30,16 +32,43 @@ public class AnnouncementResource {
         announcement.toDefault();
         return this.announcementService.createAnnouncement(announcement);
     }
-/*
-    @PreAuthorize("permitAll()")
-    @GetMapping()
-    public Flux<AnnouncementDto> findByTypeAndCategoryLocalisationNullSafe() {
-        return this.announcementService.readAll()
 
-       // return this.announcementService.findByTypeAndCategoryLocalisationNullSafe(category, type, location);
-.map(AnnouncementDto::ofvalue);
+    @GetMapping(SEARCH)
+    public Flux<AnnouncementDto> findByTypeAndCategoryLocalisationNullSafe(
+            @RequestParam(required = false) String category, @RequestParam(required = false) String type,
+            @RequestParam(required = false) String location) {
+        return this.announcementService.findByTypeAndCategoryLocalisationNullSafe(category, type, location)
+                .map(AnnouncementDto::ofvalue);
     }
 
+    @GetMapping(ID_ID)
+    public Mono<Announcement> findById(@PathVariable String id) {
+        return this.announcementService.findById(id);
+    }
+
+
+    /*
+    @PutMapping(ID_ID)
+        public Mono<Announcement>updateAnnouncement(@PathVariable String id,@Valid @RequestBody Announcement announcement){
+            return this.announcementService.updateAnnouncement(id,announcement);
+    }
+
+
+     */
+    @GetMapping(USERS + USER_EMAIL)
+    public Flux<AnnouncementDto> findByUserEmail(@PathVariable String userEmail) {
+        return this.announcementService.findByUserEmail(userEmail)
+                .map(AnnouncementDto::ofvalue);
+    }
+
+
+
+/*
+@DeleteMapping(ID_ID)
+public Mono<Void> deleteAnnoucemet(@PathVariable String id){
+        return null;
+                //this.announcementService.findById(email);
+    }
 
  */
 }
