@@ -40,8 +40,8 @@ public class DatabaseSeederDev {
 
     private void deleteAllAndInitialize() {
         LogManager.getLogger(this.getClass()).warn("------- Delete All -------");
-        this.userDao.deleteAll();
-        this.announcementDao.deleteAll();
+        //this.userDao.deleteAll();
+        //this.announcementDao.deleteAll();
         this.databaseStarting.initialize();
     }
 
@@ -55,7 +55,7 @@ public class DatabaseSeederDev {
                         .role(Role.CUSTOMER).registrationDate(LocalDateTime.now()).build(),
         };
         this.userDao.saveAll(List.of(users));
-        //this.userDao.deleteAll(List.of(users));
+        this.userDao.deleteAll(List.of(users));
         LogManager.getLogger(this.getClass()).warn("        ------- users");
         UserEntity userEntity = UserEntity.builder().id("id35").userName("test").email("test@a.a").familyName("Name1")
                 .mobile(12365).location("Spain")
@@ -67,6 +67,7 @@ public class DatabaseSeederDev {
                         .build(),
         };
         this.announcementDao.saveAll(List.of(announcementEntities));
+        this.announcementDao.deleteAll(List.of(announcementEntities));
         LogManager.getLogger(this.getClass()).warn("        ------- AnnouncementEntity");
     }
 

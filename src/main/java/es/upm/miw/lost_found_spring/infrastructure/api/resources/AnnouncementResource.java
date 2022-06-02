@@ -47,14 +47,12 @@ public class AnnouncementResource {
     }
 
 
-    /*
     @PutMapping(ID_ID)
         public Mono<Announcement>updateAnnouncement(@PathVariable String id,@Valid @RequestBody Announcement announcement){
             return this.announcementService.updateAnnouncement(id,announcement);
     }
 
 
-     */
     @GetMapping(USERS + USER_EMAIL)
     public Flux<AnnouncementDto> findByUserEmail(@PathVariable String userEmail) {
         return this.announcementService.findByUserEmail(userEmail)

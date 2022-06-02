@@ -38,11 +38,10 @@ public class AnnouncementService {
 
 
 
-   /* public Mono<Announcement> updateAnnouncement(String id, Announcement announcement) {
-        return this.announcementPersistence.updateAnnouncement(id,announcement);
-    }
+   public Mono<Announcement> updateAnnouncement(String id, Announcement announcement) {
+       return this.announcementPersistence.updateAnnouncement(id, announcement);
+   }
 
-    */
 
 }
 
