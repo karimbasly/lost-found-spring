@@ -48,7 +48,7 @@ public class DatabaseSeederDev {
                         .role(Role.CUSTOMER).registrationDate(LocalDateTime.now()).build(),
         };
         this.userDao.saveAll(List.of(users));
-        this.userDao.deleteAll(List.of(users));
+        //this.userDao.deleteAll(List.of(users));
         LogManager.getLogger(this.getClass()).warn("        ------- users");
     }
 
