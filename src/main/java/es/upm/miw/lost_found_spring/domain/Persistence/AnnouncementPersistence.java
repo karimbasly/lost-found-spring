@@ -11,4 +11,10 @@ public interface AnnouncementPersistence {
 
     Flux<Announcement> findByTypeAndCategoryLocalisationNullSafe(String category, String type, String location);
 
+    Mono<Announcement> findById(String id);
+
+    //Mono<Announcement> updateAnnouncement(String id, Announcement announcement);
+
+    Flux<Announcement> findByUserEmail(String userEmail);
+
 }

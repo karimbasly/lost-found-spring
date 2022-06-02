@@ -19,8 +19,8 @@ public class Announcement {
     @NotBlank
     private String name;
     private String description;
-    private String type;
-    private String Category;
+    private Type type;
+    private Category category;
     private String photo;
     private String location;
     private Double lat;

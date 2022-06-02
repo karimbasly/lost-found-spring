@@ -25,4 +25,24 @@ public class AnnouncementService {
         return this.announcementPersistence.findByTypeAndCategoryLocalisationNullSafe(category, type, location);
     }
 
+    public Mono<Announcement> findById(String id) {
+        return this.announcementPersistence.findById(id);
+    }
+
+    public Flux<Announcement> findByUserEmail(String userEmail) {
+        return this.announcementPersistence.findByUserEmail(userEmail);
+    }
+
+
+
+
+
+
+   /* public Mono<Announcement> updateAnnouncement(String id, Announcement announcement) {
+        return this.announcementPersistence.updateAnnouncement(id,announcement);
+    }
+
+    */
+
 }
+

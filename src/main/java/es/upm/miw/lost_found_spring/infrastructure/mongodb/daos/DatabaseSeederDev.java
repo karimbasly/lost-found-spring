@@ -34,7 +34,7 @@ public class DatabaseSeederDev {
 
     private void deleteAllAndInitialize() {
         LogManager.getLogger(this.getClass()).warn("------- Delete All -------");
-        this.userDao.deleteAll();
+        //this.userDao.deleteAll();
         this.databaseStarting.initialize();
     }
 
@@ -48,6 +48,7 @@ public class DatabaseSeederDev {
                         .role(Role.CUSTOMER).registrationDate(LocalDateTime.now()).build(),
         };
         this.userDao.saveAll(List.of(users));
+        this.userDao.deleteAll(List.of(users));
         LogManager.getLogger(this.getClass()).warn("        ------- users");
     }
 

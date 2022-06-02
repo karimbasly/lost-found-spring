@@ -49,7 +49,7 @@ public class UserPersistenceMongodb implements UserPersistence {
             userEntityMono = this.userReactive.findByEmail(email);
         }
         return userEntityMono
-                .switchIfEmpty(Mono.error(new NotFoundException("Non existent article email: " + email)))
+                .switchIfEmpty(Mono.error(new NotFoundException("Non existent user email: " + email)))
                 .map(userEntity -> {
                     BeanUtils.copyProperties(user, userEntity);
                     return userEntity;
