@@ -26,15 +26,13 @@ public class AnnouncementPersistenceMongodb implements AnnouncementPersistence {
     @Override
     public Mono<Announcement> createAnnouncement(Announcement announcement) {
 
-        return
+        return this.userReactive.findByEmail(announcement.getUserEmail())
+                .switchIfEmpty(Mono.error(new NotFoundException("Non existing user: " + announcement.getUserEmail())
+                ))
+                .map(userEntity -> new AnnouncementEntity(announcement, userEntity))
 
-                this.userReactive.findByEmail(announcement.getUserEmail())
-                        .switchIfEmpty(Mono.error(new NotFoundException("Non existing user: " + announcement.getUserEmail())
-                        ))
-                        .map(userEntity -> new AnnouncementEntity(announcement, userEntity))
-
-                        .flatMap(this.announcementReactive::save)
-                        .map(AnnouncementEntity::toAnnouncement);
+                .flatMap(this.announcementReactive::save)
+                .map(AnnouncementEntity::toAnnouncement);
 
 
     }
@@ -48,6 +46,7 @@ public class AnnouncementPersistenceMongodb implements AnnouncementPersistence {
     @Override
     public Mono<Announcement> findById(String id) {
         return this.announcementReactive.findById(id)
+                .switchIfEmpty(Mono.error(new NotFoundException("Non existent Announcement: " + id)))
                 .map(AnnouncementEntity::toAnnouncement);
     }
 /*
