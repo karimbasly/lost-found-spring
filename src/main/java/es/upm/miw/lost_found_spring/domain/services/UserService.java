@@ -7,7 +7,6 @@ import es.upm.miw.lost_found_spring.domain.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -54,7 +53,7 @@ public class UserService {
         return this.userPersistence.findByNameAndEmailAndLocalisationNullSafe(userName, email, mobile, location);
     }
 
-    public Mono<Void> delete(@PathVariable String email) {
+    public Mono<Void> delete(String email) {
         return this.userPersistence.delete(email);
     }
 }

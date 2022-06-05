@@ -17,4 +17,5 @@ public interface AnnouncementPersistence {
 
     Flux<Announcement> findByUserEmail(String userEmail);
 
+    Mono<Void> delete(String id);
 }
