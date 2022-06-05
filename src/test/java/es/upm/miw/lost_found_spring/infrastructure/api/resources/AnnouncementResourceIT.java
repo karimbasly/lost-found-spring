@@ -11,8 +11,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
 import static es.upm.miw.lost_found_spring.infrastructure.api.resources.AnnouncementResource.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
 public class AnnouncementResourceIT {
@@ -24,8 +23,8 @@ public class AnnouncementResourceIT {
 
     @Test
     void testCreateAndFindByEMAIL() {
-        Announcement announcement = Announcement.builder().category(Category.WALLET).type(Type.LOST).photo("")
-                .description("test").id("id5").location("Sousse").userEmail("karim@a.a").name("wallet")
+        Announcement announcement = Announcement.builder().category(Category.WALLET).type(Type.FOUND).photo("")
+                .description("test").id("id6").location("Sousse").userEmail("karim@a.a").name("wallet")
                 .build();
         this.restClientTestService.loginAdmin(webTestClient)
                 .post()
@@ -48,7 +47,7 @@ public class AnnouncementResourceIT {
                 .expectStatus().isOk()
                 .expectBodyList(Announcement.class)
                 .value(announcementEntity ->
-                        assertTrue(announcementEntity.stream().allMatch(announcement2 -> announcement2.getDescription().contains("test"))));
+                        assertTrue(announcementEntity.stream().anyMatch(announcement2 -> announcement2.getLocation().contains("tunis"))));
 
     }
 
@@ -63,8 +62,18 @@ public class AnnouncementResourceIT {
     }
 
     @Test
-    void testFindById() {
+    void testFindEmailIdNotFoundException() {
         this.restClientTestService.loginAdmin(webTestClient)
+                .get()
+                .uri(ANNOUNCEMENT + USER_EMAIL, "ka@k.k")
+                .exchange()
+                .expectStatus()
+                .isNotFound();
+    }
+
+    @Test
+    void testFindByIdAndUpdate() {
+        Announcement announcement = this.restClientTestService.loginAdmin(webTestClient)
                 .get()
                 .uri(ANNOUNCEMENT + ID_ID, "id1")
                 .exchange()
@@ -76,10 +85,28 @@ public class AnnouncementResourceIT {
                     assertEquals("Cat", announcement1.getName());
                     assertEquals(Category.PETS, announcement1.getCategory());
                     assertEquals("tunis", announcement1.getLocation());
+                    assertEquals("karim@a.a", announcement1.getUserEmail());
                 })
                 .returnResult()
                 .getResponseBody();
+        assertNotNull(announcement);
+
+        announcement.setDescription("desUpdate");
+        announcement = this.restClientTestService.loginAdmin(webTestClient)
+                .put()
+                .uri(ANNOUNCEMENT + ID_ID, "id1")
+                .body(Mono.just(announcement), Announcement.class)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Announcement.class)
+                .value(Assertions::assertNotNull)
+                .value(returnAnnouncement -> assertEquals("desUpdate", returnAnnouncement.getDescription()))
+                .returnResult()
+                .getResponseBody();
+
+
     }
+
 
     @Test
     void testFindByTypeAndCategoryLocalisationNullSafe() {
@@ -94,9 +121,8 @@ public class AnnouncementResourceIT {
                 .expectBodyList(Announcement.class)
                 .value(Assertions::assertNotNull)
                 .value(announcements ->
-                        assertTrue(announcements.stream().allMatch(announcement -> announcement.getDescription().contains("des"))));
+                        assertTrue(announcements.stream().allMatch(announcement -> announcement.getName().contains("Cat"))));
 
 
     }
-
 }

@@ -6,6 +6,7 @@ import es.upm.miw.lost_found_spring.domain.model.Announcement;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.AnnouncementReactive;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.UserReactive;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.entities.AnnouncementEntity;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -49,7 +50,7 @@ public class AnnouncementPersistenceMongodb implements AnnouncementPersistence {
                 .switchIfEmpty(Mono.error(new NotFoundException("Non existent Announcement: " + id)))
                 .map(AnnouncementEntity::toAnnouncement);
     }
-/*
+
     @Override
     public Mono<Announcement> updateAnnouncement(String id, Announcement announcement) {
         Mono<AnnouncementEntity> announcementEntityMono;
@@ -64,7 +65,6 @@ public class AnnouncementPersistenceMongodb implements AnnouncementPersistence {
                 .map(AnnouncementEntity::toAnnouncement);
     }
 
- */
 
     @Override
     public Flux<Announcement> findByUserEmail(String userEmail) {

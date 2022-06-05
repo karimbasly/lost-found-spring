@@ -13,7 +13,7 @@ public interface AnnouncementPersistence {
 
     Mono<Announcement> findById(String id);
 
-    //Mono<Announcement> updateAnnouncement(String id, Announcement announcement);
+    Mono<Announcement> updateAnnouncement(String id, Announcement announcement);
 
     Flux<Announcement> findByUserEmail(String userEmail);
 

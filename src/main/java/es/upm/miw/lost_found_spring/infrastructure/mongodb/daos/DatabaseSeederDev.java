@@ -57,16 +57,13 @@ public class DatabaseSeederDev {
         this.userDao.saveAll(List.of(users));
         //this.userDao.deleteAll(List.of(users));
         LogManager.getLogger(this.getClass()).warn("        ------- users");
-        UserEntity userEntity = UserEntity.builder().id("id35").userName("test").email("test@a.a").familyName("Name1")
-                .mobile(12365).location("Spain")
-                .password(pass)
-                .role(Role.CUSTOMER).registrationDate(LocalDateTime.now()).build();
         AnnouncementEntity[] announcementEntities = {
                 AnnouncementEntity.builder().id("id1").category(Category.PETS).description("des").location("tunis")
-                        .name("Cat").photo("").type(Type.LOST).userEntity(userEntity)
+                        .name("Cat").photo("").type(Type.LOST).userEntity(users[0])
                         .build(),
         };
         this.announcementDao.saveAll(List.of(announcementEntities));
+        //this.announcementDao.deleteAll(List.of(announcementEntities));
         LogManager.getLogger(this.getClass()).warn("        ------- AnnouncementEntity");
     }
 

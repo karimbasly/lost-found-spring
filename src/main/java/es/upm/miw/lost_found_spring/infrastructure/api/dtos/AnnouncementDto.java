@@ -21,6 +21,7 @@ public class AnnouncementDto {
     private Category category;
     private String photo;
     private String location;
+    private String userEmail;
     private String username;
     private String userPhoto;
 
@@ -33,6 +34,7 @@ public class AnnouncementDto {
                 .type(announcement.getType())
                 .photo(announcement.getPhoto())
                 .location(announcement.getLocation())
+                .userEmail(announcement.getUserEmail())
                 .username(announcement.getUserName())
                 .userPhoto(announcement.getUserPhoto())
                 .build();
