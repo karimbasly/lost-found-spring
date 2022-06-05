@@ -60,13 +60,10 @@ public class AnnouncementResource {
     }
 
 
-
-/*
-@DeleteMapping(ID_ID)
-public Mono<Void> deleteAnnoucemet(@PathVariable String id){
-        return null;
-                //this.announcementService.findById(email);
+    @DeleteMapping(ID_ID)
+    public Mono<Void> deleteAnnouncement(@PathVariable String id) {
+        return this.announcementService.delete(id);
     }
 
- */
+
 }

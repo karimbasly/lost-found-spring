@@ -72,5 +72,12 @@ public class AnnouncementPersistenceMongodb implements AnnouncementPersistence {
                 .map(AnnouncementEntity::toAnnouncement);
     }
 
+    @Override
+    public Mono<Void> delete(String id) {
+        return this.announcementReactive.findById(id)
+                .switchIfEmpty(Mono.error(new NotFoundException("Non existent Announcement: " + id)))
+                .then(this.announcementReactive.deleteById(id));
+    }
+
 
 }

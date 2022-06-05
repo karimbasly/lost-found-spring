@@ -122,7 +122,24 @@ public class AnnouncementResourceIT {
                 .value(Assertions::assertNotNull)
                 .value(announcements ->
                         assertTrue(announcements.stream().allMatch(announcement -> announcement.getName().contains("Cat"))));
+    }
 
+    @Test
+    void testDeleteAnnouncement() {
+        Announcement announcement = Announcement.builder().category(Category.WALLET).type(Type.FOUND).photo("")
+                .description("test").id("id5").location("Sousse").userEmail("karim@a.a").name("wallet")
+                .build();
+        this.restClientTestService.loginAdmin(webTestClient)
+                .post()
+                .uri(ANNOUNCEMENT)
+                .body(Mono.just(announcement), Announcement.class)
+                .exchange()
+                .expectStatus().isOk();
+        this.restClientTestService.loginAdmin(webTestClient)
+                .delete()
+                .uri(ANNOUNCEMENT + ID_ID, "id5")
+                .exchange()
+                .expectStatus().isOk();
 
     }
 }
