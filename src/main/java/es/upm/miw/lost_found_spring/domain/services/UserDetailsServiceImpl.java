@@ -1,6 +1,6 @@
 package es.upm.miw.lost_found_spring.domain.services;
 
-import es.upm.miw.lost_found_spring.domain.Persistence.UserPersistence;
+import es.upm.miw.lost_found_spring.domain.persistence.UserPersistence;
 import es.upm.miw.lost_found_spring.infrastructure.api.http_errors.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

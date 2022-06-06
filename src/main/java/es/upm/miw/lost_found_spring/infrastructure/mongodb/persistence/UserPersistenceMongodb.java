@@ -1,9 +1,9 @@
 package es.upm.miw.lost_found_spring.infrastructure.mongodb.persistence;
 
-import es.upm.miw.lost_found_spring.domain.Persistence.UserPersistence;
 import es.upm.miw.lost_found_spring.domain.exceptions.ConflictException;
 import es.upm.miw.lost_found_spring.domain.exceptions.NotFoundException;
 import es.upm.miw.lost_found_spring.domain.model.User;
+import es.upm.miw.lost_found_spring.domain.persistence.UserPersistence;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.UserReactive;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.entities.UserEntity;
 import org.springframework.beans.BeanUtils;

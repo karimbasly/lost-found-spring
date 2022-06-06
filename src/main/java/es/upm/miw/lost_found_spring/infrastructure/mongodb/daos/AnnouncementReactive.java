@@ -14,10 +14,6 @@ public interface AnnouncementReactive extends ReactiveSortingRepository<Announce
             + "] }")
     Flux<AnnouncementEntity> findByTypeAndCategoryLocalisationNullSafe(String category, String type, String location);
 
-    //Flux<AnnouncementEntity>findByUserEmail(Mono<UserEntity> userEntityMono);
-  /* @Query("{$and:[" // allow NULL in barcode
-            + "?#{ {_id : {$ne:null}} : { userEntity : { $elemMatch: { email: { $regex:[0], $options: 'i'} } } },"
-            + "] }")*/
     Flux<AnnouncementEntity> findByUserEmail(String userEmail);
 
 

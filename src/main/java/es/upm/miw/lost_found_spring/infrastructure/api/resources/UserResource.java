@@ -48,7 +48,7 @@ public class UserResource {
 
 
     @GetMapping(EMAIL)
-    public Mono<User> GetUserByEmail(@PathVariable String email) {
+    public Mono<User> getUserByEmail(@PathVariable String email) {
         return this.userService.readByEmail(email);
     }
 
