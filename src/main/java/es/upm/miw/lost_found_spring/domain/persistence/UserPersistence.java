@@ -1,4 +1,4 @@
-package es.upm.miw.lost_found_spring.domain.Persistence;
+package es.upm.miw.lost_found_spring.domain.persistence;
 
 import es.upm.miw.lost_found_spring.domain.model.User;
 import org.springframework.stereotype.Repository;

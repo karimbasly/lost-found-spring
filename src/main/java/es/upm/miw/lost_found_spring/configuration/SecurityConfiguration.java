@@ -44,11 +44,11 @@ public class SecurityConfiguration {
                 .formLogin().disable()
                 .logout().disable()
                 .httpBasic()
-                .and().addFilterAt(this.JwtAuthenticationWebFilter(), SecurityWebFiltersOrder.FIRST)
+                .and().addFilterAt(this.jwtAuthenticationWebFilter(), SecurityWebFiltersOrder.FIRST)
                 .build();
     }
 
-    private AuthenticationWebFilter JwtAuthenticationWebFilter() {
+    private AuthenticationWebFilter jwtAuthenticationWebFilter() {
         AuthenticationWebFilter bearerAuthenticationFilter =
                 new AuthenticationWebFilter(new JwtAuthenticationManager(jwtService));
         bearerAuthenticationFilter.setServerAuthenticationConverter(serverWebExchange -> {

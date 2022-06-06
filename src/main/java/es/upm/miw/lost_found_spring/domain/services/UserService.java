@@ -2,8 +2,8 @@ package es.upm.miw.lost_found_spring.domain.services;
 
 
 import es.upm.miw.lost_found_spring.configuration.JwtService;
-import es.upm.miw.lost_found_spring.domain.Persistence.UserPersistence;
 import es.upm.miw.lost_found_spring.domain.model.User;
+import es.upm.miw.lost_found_spring.domain.persistence.UserPersistence;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

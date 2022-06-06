@@ -1,8 +1,8 @@
 package es.upm.miw.lost_found_spring.infrastructure.mongodb.persistence;
 
-import es.upm.miw.lost_found_spring.domain.Persistence.AnnouncementPersistence;
 import es.upm.miw.lost_found_spring.domain.exceptions.NotFoundException;
 import es.upm.miw.lost_found_spring.domain.model.Announcement;
+import es.upm.miw.lost_found_spring.domain.persistence.AnnouncementPersistence;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.AnnouncementReactive;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.UserReactive;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.entities.AnnouncementEntity;

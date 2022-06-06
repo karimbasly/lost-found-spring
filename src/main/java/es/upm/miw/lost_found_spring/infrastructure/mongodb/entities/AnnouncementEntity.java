@@ -34,6 +34,7 @@ public class AnnouncementEntity {
 
     public AnnouncementEntity(Announcement announcement, UserEntity userEntity) {
         BeanUtils.copyProperties(announcement, this);
+        this.name = announcement.getName();
         this.userEmail = userEntity.getEmail();
         this.userEntity = userEntity;
     }
