@@ -23,7 +23,7 @@ public class UserDto {
     private Integer mobile;
     private String location;
     private Role role;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registrationDate;
 
 
