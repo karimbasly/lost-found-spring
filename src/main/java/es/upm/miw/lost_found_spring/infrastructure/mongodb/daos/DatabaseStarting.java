@@ -17,7 +17,7 @@ public class DatabaseStarting {
     private final UserDao userDao;
 
     private static final String ADMIN = "admin";
-    private static final String TEST_PAS = "test";
+
     private static final String USERNAME = "admin@admin.admin";
     private static final String TEST = "test@test.test";
     private static final String NAME = "karim";
@@ -43,7 +43,7 @@ public class DatabaseStarting {
                     .role(Role.ADMIN).registrationDate(LocalDateTime.now()).build(),
                     UserEntity.builder().userName(NAME).familyName(NAME)
                             .email(TEST)
-                            .password(new BCryptPasswordEncoder().encode(TEST_PAS)).photo("").mobile(POINT_MOBILE).location(VARIOUS_LOCATION)
+                            .password(new BCryptPasswordEncoder().encode(ADMIN)).photo("").mobile(POINT_MOBILE).location(VARIOUS_LOCATION)
                             .role(Role.CUSTOMER).registrationDate(LocalDateTime.now()).build(),
             };
             this.userDao.saveAll(List.of(users));
