@@ -24,7 +24,7 @@ public class AnnouncementResourceIT {
     @Test
     void testCreateAndFindByEMAIL() {
         Announcement announcement = Announcement.builder().category(Category.WALLET).type(Type.FOUND).photo("")
-                .description("test").id("id6").location("Sousse").userEmail("karim@a.a").name("wallet")
+                .description("test").id("id6").userEmail("karim@a.a").name("wallet")
                 .build();
         this.restClientTestService.loginAdmin(webTestClient)
                 .post()
@@ -36,7 +36,6 @@ public class AnnouncementResourceIT {
                 .value(Assertions::assertNotNull)
                 .value(announcement1 -> {
                     assertEquals("test", announcement1.getDescription());
-                    assertEquals("Sousse", announcement1.getLocation());
                     assertEquals(0.0, announcement1.getLat());
                     assertEquals("abc", announcement1.getUserName());
                 });

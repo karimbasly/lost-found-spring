@@ -65,7 +65,7 @@ public class UserResource {
         return this.userService.findByNameAndEmailAndLocalisationNullSafe(userName, email, mobile, location)
                 .map(UserDto::ofNameEmailMobile);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(EMAIL)
     public Mono<Void> deleteUser(@PathVariable String email) {
         return this.userService.delete(email);
