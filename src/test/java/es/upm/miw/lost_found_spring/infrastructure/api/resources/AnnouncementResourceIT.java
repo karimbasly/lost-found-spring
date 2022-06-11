@@ -4,6 +4,7 @@ import es.upm.miw.lost_found_spring.domain.model.Announcement;
 import es.upm.miw.lost_found_spring.domain.model.Category;
 import es.upm.miw.lost_found_spring.domain.model.Type;
 import es.upm.miw.lost_found_spring.infrastructure.api.RestClientTestService;
+import es.upm.miw.lost_found_spring.infrastructure.api.dtos.AnnouncementDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +118,7 @@ public class AnnouncementResourceIT {
                         .build())
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(Announcement.class)
+                .expectBodyList(AnnouncementDto.class)
                 .value(Assertions::assertNotNull)
                 .value(announcements ->
                         assertTrue(announcements.stream().allMatch(announcement -> announcement.getName().contains("Cat"))));
