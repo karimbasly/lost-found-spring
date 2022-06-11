@@ -3,14 +3,12 @@ package es.upm.miw.lost_found_spring.infrastructure.api.dtos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import es.upm.miw.lost_found_spring.domain.model.User;
 import es.upm.miw.lost_found_spring.infrastructure.api.http_errors.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
