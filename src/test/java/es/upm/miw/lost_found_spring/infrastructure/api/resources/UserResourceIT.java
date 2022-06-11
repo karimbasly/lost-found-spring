@@ -154,7 +154,7 @@ public class UserResourceIT {
                 .post().uri(USERS)
                 .body(Mono.just(UserDto.builder().userName("a").userName("kk").build()), UserDto.class)
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
 }

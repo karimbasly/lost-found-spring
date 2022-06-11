@@ -3,7 +3,6 @@ package es.upm.miw.lost_found_spring.infrastructure.api.http_errors;
 
 import es.upm.miw.lost_found_spring.domain.exceptions.BadRequestException;
 import es.upm.miw.lost_found_spring.domain.exceptions.ConflictException;
-import es.upm.miw.lost_found_spring.domain.exceptions.ForbiddenException;
 import es.upm.miw.lost_found_spring.domain.exceptions.NotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.http.HttpStatus;
@@ -54,15 +53,6 @@ public class ApiExceptionHandler {
         return new ErrorMessage(exception, HttpStatus.CONFLICT.value());
     }
 
-
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler({
-            ForbiddenException.class
-    })
-    @ResponseBody
-    public ErrorMessage forbidden(Exception exception) {
-        return new ErrorMessage(exception, HttpStatus.FORBIDDEN.value());
-    }
 
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
