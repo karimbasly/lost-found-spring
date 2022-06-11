@@ -3,12 +3,11 @@ package es.upm.miw.lost_found_spring.infrastructure.api.dtos;
 import es.upm.miw.lost_found_spring.domain.model.Announcement;
 import es.upm.miw.lost_found_spring.domain.model.Category;
 import es.upm.miw.lost_found_spring.domain.model.Type;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
