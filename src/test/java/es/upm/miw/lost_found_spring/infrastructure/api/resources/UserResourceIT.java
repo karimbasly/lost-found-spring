@@ -95,7 +95,7 @@ public class UserResourceIT {
                         .build())
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(User.class)
+                .expectBodyList(UserDto.class)
                 .value(Assertions::assertNotNull)
                 .value(users ->
                         assertTrue(users.stream().allMatch(user -> user.getFamilyName().contains("karim"))));
