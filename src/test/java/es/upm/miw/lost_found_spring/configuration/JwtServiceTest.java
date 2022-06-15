@@ -1,12 +1,11 @@
 package es.upm.miw.lost_found_spring.configuration;
 
 import es.upm.miw.lost_found_spring.TestConfig;
-import es.upm.miw.lost_found_spring.infrastructure.api.http_errors.Role;
-import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
 class JwtServiceTest {
@@ -15,9 +14,23 @@ class JwtServiceTest {
     private JwtService jwtService;
 
     @Test
-    void testCreateToken() {
-        String token = jwtService.createToken("$$$$$$$", "adm", Role.ADMIN.name());
-        assertFalse(token.isEmpty());
-        LogManager.getLogger(this.getClass()).info("token:" + token);
+    void testJwtExceptionNotBearer() {
+        assertTrue(jwtService.userName("Not Bearer").isEmpty());
+    }
+
+    @Test
+    void testJwtUtilExtract() {
+        assertEquals("t.t.t", jwtService.extractToken("Bearer t.t.t"));
+    }
+
+    @Test
+    void testCreateTokenAndVerify() {
+        //String token = jwtService.createToken("$$$$$$$", "adm", Role.ADMIN.name());
+        String token = jwtService.createToken("user-id", "name", "ROLE");
+        assertEquals(3, token.split("\\.").length);
+        assertTrue(token.length() > 30);
+        assertEquals("user-id", jwtService.email(token));
+        assertEquals("name", jwtService.userName(token));
+        assertEquals("ROLE", jwtService.role(token));
     }
 }

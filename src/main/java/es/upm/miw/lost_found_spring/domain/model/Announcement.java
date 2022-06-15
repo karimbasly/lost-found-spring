@@ -1,15 +1,13 @@
 package es.upm.miw.lost_found_spring.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
@@ -46,4 +44,5 @@ public class Announcement {
         }
 
     }
+    //TODO UNITEST
 }

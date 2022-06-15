@@ -4,6 +4,7 @@ import es.upm.miw.lost_found_spring.domain.model.Announcement;
 import es.upm.miw.lost_found_spring.domain.model.Category;
 import es.upm.miw.lost_found_spring.domain.model.Type;
 import es.upm.miw.lost_found_spring.infrastructure.api.RestClientTestService;
+import es.upm.miw.lost_found_spring.infrastructure.api.dtos.AnnouncementDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class AnnouncementResourceIT {
     @Test
     void testCreateAndFindByEMAIL() {
         Announcement announcement = Announcement.builder().category(Category.WALLET).type(Type.FOUND).photo("")
-                .description("test").id("id6").location("Sousse").userEmail("karim@a.a").name("wallet")
+                .description("test").id("id6").userEmail("karim@a.a").name("wallet")
                 .build();
         this.restClientTestService.loginAdmin(webTestClient)
                 .post()
@@ -36,7 +37,6 @@ public class AnnouncementResourceIT {
                 .value(Assertions::assertNotNull)
                 .value(announcement1 -> {
                     assertEquals("test", announcement1.getDescription());
-                    assertEquals("Sousse", announcement1.getLocation());
                     assertEquals(0.0, announcement1.getLat());
                     assertEquals("abc", announcement1.getUserName());
                 });
@@ -118,7 +118,7 @@ public class AnnouncementResourceIT {
                         .build())
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(Announcement.class)
+                .expectBodyList(AnnouncementDto.class)
                 .value(Assertions::assertNotNull)
                 .value(announcements ->
                         assertTrue(announcements.stream().allMatch(announcement -> announcement.getName().contains("Cat"))));

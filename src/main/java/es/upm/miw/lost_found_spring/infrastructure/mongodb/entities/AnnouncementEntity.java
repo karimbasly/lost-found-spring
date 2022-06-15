@@ -11,7 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Builder
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Document
