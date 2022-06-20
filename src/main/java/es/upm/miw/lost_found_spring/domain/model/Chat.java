@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
-import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -26,31 +25,4 @@ public class Chat {
     private String userNamesTo;
     @DBRef
     private List<Message> message;
-
-
-    public void doDefault() {
-        if (Objects.isNull(sendEmailFrom)) {
-            sendEmailFrom = "LocalDateTime.now();";
-        }
-        if (Objects.isNull(sendEmailTo)) {
-            sendEmailTo = "Role.CUSTOMER";
-        }
-
-        if (Objects.isNull(lastMessage)) {
-            lastMessage = "";
-        }
-        if (Objects.isNull(userPhotoFrom)) {
-            userPhotoFrom = "";
-        }
-        if (Objects.isNull(userPhotoTo)) {
-            userPhotoTo = "";
-        }
-        if (Objects.isNull(userNamesFrom)) {
-            userNamesFrom = "";
-        }
-        if (Objects.isNull(userNamesTo)) {
-            userNamesTo = "";
-        }
-
-    }
 }
