@@ -4,8 +4,12 @@ import es.upm.miw.lost_found_spring.domain.model.Category;
 import es.upm.miw.lost_found_spring.domain.model.Type;
 import es.upm.miw.lost_found_spring.infrastructure.api.http_errors.Role;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.synchronous.AnnouncementDao;
+import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.synchronous.ChatDao;
+import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.synchronous.MessageDao;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.synchronous.UserDao;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.entities.AnnouncementEntity;
+import es.upm.miw.lost_found_spring.infrastructure.mongodb.entities.ChatEntity;
+import es.upm.miw.lost_found_spring.infrastructure.mongodb.entities.MessageEntity;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.entities.UserEntity;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service // @Profile("dev")
@@ -22,12 +27,16 @@ public class DatabaseSeederDev {
     private final DatabaseStarting databaseStarting;
     private final UserDao userDao;
     private final AnnouncementDao announcementDao;
+    private final MessageDao messageDao;
+    private final ChatDao chatDao;
 
     @Autowired
-    public DatabaseSeederDev(DatabaseStarting databaseStarting, UserDao userDao, AnnouncementDao announcementDao) {
+    public DatabaseSeederDev(DatabaseStarting databaseStarting, UserDao userDao, AnnouncementDao announcementDao, MessageDao messageDao, ChatDao chatDao) {
         this.databaseStarting = databaseStarting;
         this.userDao = userDao;
         this.announcementDao = announcementDao;
+        this.messageDao = messageDao;
+        this.chatDao = chatDao;
         this.deleteAllAndInitializeAndSeedDataBase();
 
     }
@@ -65,6 +74,24 @@ public class DatabaseSeederDev {
         this.announcementDao.saveAll(List.of(announcementEntities));
         //this.announcementDao.deleteAll(List.of(announcementEntities));
         LogManager.getLogger(this.getClass()).warn("        ------- AnnouncementEntity");
+
+        List<MessageEntity> messages = Arrays.asList(
+                MessageEntity.builder().text("hello").senderEmail("aa@aa.a").id("id1").build(),
+                MessageEntity.builder().text("hello").senderEmail("aa@aa.a").id("id2").build()
+
+        );
+        this.messageDao.saveAll(messages);
+
+        List<ChatEntity> chatEntities = Arrays.asList(
+                ChatEntity.builder().id("id1").sendEmailFrom("karim1").sendEmailTo("karim").lastMessage("ok").userPhotoFrom("ok")
+                        .userPhotoTo("ok").userNamesFrom("ok").userNamesTo("ok").messageEntities(messages).build(),
+                //private String lastMessageDate;
+
+                ChatEntity.builder().id("id2").sendEmailFrom("karim2").sendEmailTo("karim1").lastMessage("ok1").userPhotoFrom("ok")
+                        .userPhotoTo("ok").userNamesFrom("ok").userNamesTo("ok").messageEntities(messages).build()
+        );
+
+        this.chatDao.saveAll(chatEntities);
     }
 
 }

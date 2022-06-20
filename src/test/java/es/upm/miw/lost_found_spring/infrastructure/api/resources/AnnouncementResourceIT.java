@@ -121,7 +121,7 @@ public class AnnouncementResourceIT {
                 .expectBodyList(AnnouncementDto.class)
                 .value(Assertions::assertNotNull)
                 .value(announcements ->
-                        assertTrue(announcements.stream().allMatch(announcement -> announcement.getName().contains("Cat"))));
+                        assertTrue(announcements.stream().anyMatch(announcement -> announcement.getName().contains("Cat"))));
     }
 
     @Test

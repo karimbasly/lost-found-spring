@@ -10,6 +10,7 @@ import es.upm.miw.lost_found_spring.infrastructure.mongodb.entities.ChatEntity;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.entities.MessageEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
@@ -51,6 +52,15 @@ public class ChatPersistenceMongodb implements ChatPersistence {
                     return chatEntity;
                 })
                 .flatMap(this.chatReactive::save)
+                .map(ChatEntity::toChat);
+    }
+
+    @Override
+    public Flux<Chat> findBySendEmailFrom(String sendEmailFrom, String sendEmailTo) {
+        return this.chatReactive.findBySendEmailFromOrSendEmailTo(sendEmailFrom, sendEmailTo)
+                .switchIfEmpty(Mono.error(
+                        new NotFoundException("Non existing user:To2 " + sendEmailFrom + sendEmailTo)))
+
                 .map(ChatEntity::toChat);
     }
 }
