@@ -11,8 +11,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-import static es.upm.miw.lost_found_spring.infrastructure.api.resources.ChatResource.CHAT;
-import static es.upm.miw.lost_found_spring.infrastructure.api.resources.ChatResource.SEND_EMAIL_FROM;
+import static es.upm.miw.lost_found_spring.infrastructure.api.resources.ChatResource.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
@@ -47,11 +46,11 @@ public class ChatResourceIT {
     }
 
     @Test
-    void testFindByuserFrom() {
+    void testFindByUserFrom() {
 
         this.restClientTestService.loginAdmin(webTestClient)
                 .get()
-                .uri(CHAT + SEND_EMAIL_FROM, "karim1", "karim1")
+                .uri(CHAT + SEND_EMAIL_FROM + SEND_EMAIL_TO, "karim1", "karim1")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Chat.class)
@@ -61,6 +60,53 @@ public class ChatResourceIT {
                     assertTrue(chat1.stream().anyMatch(chat -> chat.getLastMessage().contains("ok1")));
 
                     //assertEquals("OK", chat1.getUserNamesFrom());
+                });
+    }
+
+    @Test
+    void testFindById() {
+        this.restClientTestService.loginAdmin(webTestClient)
+                .get()
+                .uri(CHAT + ID_ID, "id1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Chat.class)
+                .value(Assertions::assertNotNull)
+                .value(chat1 -> {
+                    assertEquals("karim", chat1.getSendEmailTo());
+                    assertTrue(chat1.getMessage().stream().anyMatch(chat -> chat.getText().contains("hello")));
+                    //assertTrue(chat1.getMessage().stream().anyMatch(message -> message.getText().contains("ok")));
+                });
+
+    }
+
+    @Test
+    void testSendMessage() {
+        Chat chat = this.restClientTestService.loginAdmin(webTestClient)
+                .get()
+                .uri(CHAT + ID_ID, "id1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Chat.class)
+                .value(Assertions::assertNotNull)
+                .value(chat1 -> {
+                    assertEquals("karim", chat1.getSendEmailTo());
+                })
+                .returnResult()
+                .getResponseBody();
+        assertNotNull(chat);
+        List<Message> messageEntity = List.of(Message.builder().text("test22").senderEmail("ada").build());
+        chat.setMessage(messageEntity);
+        this.restClientTestService.loginAdmin(webTestClient)
+                .put()
+                .uri(CHAT + ID_ID, "id1")
+                .body(Mono.just(chat), Message.class)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Chat.class)
+                .value(Assertions::assertNotNull)
+                .value(chat2 -> {
+                    assertTrue(chat2.getMessage().stream().anyMatch(message -> message.getText().contains("test22")));
                 });
     }
 }

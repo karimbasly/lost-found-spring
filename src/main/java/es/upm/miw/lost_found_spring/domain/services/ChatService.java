@@ -23,4 +23,12 @@ public class ChatService {
     public Flux<Chat> findBySendEmailFrom(String sendEmailFrom, String sendEmailTo) {
         return this.chatPersistence.findBySendEmailFrom(sendEmailFrom, sendEmailFrom);
     }
+
+    public Mono<Chat> findById(String id) {
+        return this.chatPersistence.findById(id);
+    }
+
+    public Mono<Chat> addMessage(String id, Chat chat) {
+        return this.chatPersistence.addMessage(id, chat);
+    }
 }

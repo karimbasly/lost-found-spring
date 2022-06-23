@@ -64,7 +64,7 @@ public class DatabaseSeederDev {
                         .role(Role.CUSTOMER).registrationDate(LocalDateTime.now()).build(),
         };
         this.userDao.saveAll(List.of(users));
-        //this.userDao.deleteAll(List.of(users));
+       //this.userDao.deleteAll(List.of(users));
         LogManager.getLogger(this.getClass()).warn("        ------- users");
         AnnouncementEntity[] announcementEntities = {
                 AnnouncementEntity.builder().id("id1").category(Category.PETS).description("des").location("tunis")
@@ -76,7 +76,7 @@ public class DatabaseSeederDev {
         LogManager.getLogger(this.getClass()).warn("        ------- AnnouncementEntity");
 
         List<MessageEntity> messages = Arrays.asList(
-                MessageEntity.builder().text("hello").senderEmail("aa@aa.a").id("id1").build(),
+                MessageEntity.builder().text("hello").senderEmail("aa@aa.a").id("id1").messageDate(LocalDateTime.now()).build(),
                 MessageEntity.builder().text("hello").senderEmail("aa@aa.a").id("id2").build()
 
         );
@@ -85,7 +85,6 @@ public class DatabaseSeederDev {
         List<ChatEntity> chatEntities = Arrays.asList(
                 ChatEntity.builder().id("id1").sendEmailFrom("karim1").sendEmailTo("karim").lastMessage("ok").userPhotoFrom("ok")
                         .userPhotoTo("ok").userNamesFrom("ok").userNamesTo("ok").messageEntities(messages).build(),
-                //private String lastMessageDate;
 
                 ChatEntity.builder().id("id2").sendEmailFrom("karim2").sendEmailTo("karim1").lastMessage("ok1").userPhotoFrom("ok")
                         .userPhotoTo("ok").userNamesFrom("ok").userNamesTo("ok").messageEntities(messages).build()

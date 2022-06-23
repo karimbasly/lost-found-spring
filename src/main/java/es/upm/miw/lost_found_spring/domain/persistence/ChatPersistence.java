@@ -10,4 +10,8 @@ public interface ChatPersistence {
     Mono<Chat> createChat(Chat chat);
 
     Flux<Chat> findBySendEmailFrom(String sendEmailFrom, String sendEmailTo);
+
+    Mono<Chat> findById(String id);
+
+    Mono<Chat> addMessage(String id, Chat chat);
 }

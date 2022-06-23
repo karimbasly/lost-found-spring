@@ -2,16 +2,20 @@ package es.upm.miw.lost_found_spring.infrastructure.mongodb.persistence;
 
 import es.upm.miw.lost_found_spring.domain.exceptions.NotFoundException;
 import es.upm.miw.lost_found_spring.domain.model.Chat;
+import es.upm.miw.lost_found_spring.domain.model.Message;
 import es.upm.miw.lost_found_spring.domain.persistence.ChatPersistence;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.ChatReactive;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.MessageReactive;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.daos.UserReactive;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.entities.ChatEntity;
 import es.upm.miw.lost_found_spring.infrastructure.mongodb.entities.MessageEntity;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
 
 @Repository
 public class ChatPersistenceMongodb implements ChatPersistence {
@@ -37,8 +41,10 @@ public class ChatPersistenceMongodb implements ChatPersistence {
                 .map(userEntity -> {
                     chatEntity.setUserNamesFrom(userEntity.getUserName());
                     chatEntity.setUserPhotoFrom(userEntity.getPhoto());
+                    chatEntity.setDateLastMessage(LocalDateTime.now());
                     messageEntity1.setSenderEmail(userEntity.getEmail());
                     messageEntity1.setText(chatEntity.getLastMessage());
+                    messageEntity1.setMessageDate(LocalDateTime.now());
                     chatEntity.add(messageEntity1);
                     return messageEntity1;
                 }).then(this.messageReactive.save(messageEntity1))
@@ -63,74 +69,32 @@ public class ChatPersistenceMongodb implements ChatPersistence {
 
                 .map(ChatEntity::toChat);
     }
-}
 
-                         /*flatMap(chatEntity1 -> {
-                    return Flux.fromStream(chat.getMessage().stream())
-                            .map(message -> {MessageEntity messageEntity= new MessageEntity(message);
-                                return this.userReactive.findByEmail(message.getSenderEmail())
-                                        .switchIfEmpty(Mono.error(
-                                                new NotFoundException("Non existing user:To2 " + chat.getSendEmailTo())))
-                                        .map(userEntity -> {messageEntity.setSenderEmail(userEntity.getEmail());
-                                        return messageEntity;
-                                        });
+    @Override
+    public Mono<Chat> findById(String id) {
+        return this.chatReactive.findById(id)
+                .map(ChatEntity::toChat);
+    }
 
-                            }).doOnNext(ChatEntity::add)
-
-                         })
-
-/*/
- /*               .flatMap(chatEntity1 -> {
-                    chatEntity1.getMessageEntities().stream().map(messageEntity ->{
-
-                           // .map(messageEntity ->messageEntity
-                            MessageEntity messageEntity1 =new MessageEntity(messageEntity.toMessage());
-                            chatEntity1.add(messageEntity1);
-                            return chatEntity1;
-                            //return messageEntity1;
-                    });
-                })*/
-//.then(this.chatReactive.save(chatEntity))
-//  messageEntity1.setText(chatEntity.getLastMessage());
-// messageEntity1.setSenderEmail(chat.getSendEmailFrom());
-//chatEntity.add(messageEntity1);
-// return
-              /*  Flux.fromStream(chat.getMessage().stream())
-                        //.switchIfEmpty(Mono.error(new NotFoundException("Article Loss is empty :")))
-                .flatMap(message -> {
-                    MessageEntity messageEntity =new MessageEntity(message);
-                    return this.userReactive.findByEmail(chat.getSendEmailFrom())
-                            .switchIfEmpty(Mono.error(
-                                    new NotFoundException("Non existing user:From 1 " + message.getSenderEmail())))
-                            .map(userEntity ->
-                            {messageEntity.setSenderEmail(userEntity.getEmail());
-                            messageEntity.setText(chatEntity.getLastMessage());
-                                //chatEntity.add(messageEntity);
-
-                            return messageEntity;
-                            });
-
-                }).flatMap(this.messageReactive::save)
-                        .doOnNext(chatEntity::add)
-               .then(this.userReactive.findByEmail(chat.getSendEmailTo()))
+    @Override
+    public Mono<Chat> addMessage(String id, Chat chat) {
+        int lastElement = chat.getMessage().size();
+        Message message1 = chat.getMessage().get(lastElement - 1);
+        MessageEntity messageEntity = new MessageEntity(message1);
+        messageEntity.setMessageDate(LocalDateTime.now());
+        return this.messageReactive.save(messageEntity)
+                .then(this.chatReactive.findById(id))
                 .switchIfEmpty(Mono.error(
-                        new NotFoundException("Non existing user:To2 " + chat.getSendEmailTo())))
-                .map(userEntity1 ->
-                {chatEntity.setUserNamesTo(userEntity1.getUserName());
-                    chatEntity.setUserPhotoTo(userEntity1.getPhoto());
+                        new NotFoundException("Non existing Chat  " + id)))
+                .map(chatEntity -> {
+                    BeanUtils.copyProperties(chat, chatEntity);
+                    chatEntity.setDateLastMessage(LocalDateTime.now());
+                    chatEntity.setLastMessage(messageEntity.getText());
+                    chatEntity.add(messageEntity);
                     return chatEntity;
                 })
-                .then(this.userReactive.findByEmail(chat.getSendEmailFrom()))
-                .switchIfEmpty(Mono.error(
-                        new NotFoundException("Non existing user:From 1 " + chat.getSendEmailFrom())))
-                .map(userEntity3 -> {
-                    chatEntity.setUserNamesFrom(userEntity3.getUserName());
-                    chatEntity.setUserPhotoFrom(userEntity3.getPhoto());
-                    return chatEntity;
-                }) .then(this.chatReactive.save(chatEntity))
-                        .map(ChatEntity::toChat);
-
-                //.then(this.chatReactive.save(chatEntity))
+                .flatMap(this.chatReactive::save)
                 .map(ChatEntity::toChat);
 
-                */
+    }
+}

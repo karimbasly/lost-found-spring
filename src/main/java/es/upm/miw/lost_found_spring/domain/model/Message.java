@@ -1,29 +1,21 @@
 package es.upm.miw.lost_found_spring.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-//@JsonDeserialize
-//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Message {
     private String id;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime messageDate;
     private String senderEmail;
     private String text;
-
-    public void doDefault() {
-        if (Objects.isNull(senderEmail)) {
-            senderEmail = "LocalDateTime.now()";
-        }
-        if (Objects.isNull(text)) {
-            this.text = "Role.CUSTOMER";
-        }
-    }
 }
