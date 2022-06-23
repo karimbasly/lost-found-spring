@@ -11,8 +11,9 @@ import reactor.core.publisher.Mono;
 @RequestMapping(ChatResource.CHAT)
 public class ChatResource {
     public static final String CHAT = "/chats";
-    public static final String SEND_EMAIL_FROM = "/{sendEmailFrom}/{sendEmailTo}";
-
+    public static final String SEND_EMAIL_FROM = "/{sendEmailFrom}";
+    public static final String SEND_EMAIL_TO = "/{sendEmailTo}";
+    public static final String ID_ID = "/{id}";
     private final ChatService chatService;
 
     @Autowired
@@ -22,13 +23,23 @@ public class ChatResource {
 
     @PostMapping(produces = {"application/json"})
     public Mono<Chat> createChat(@RequestBody Chat chat) {
-        //chat.doDefault();
         return this.chatService.createChat(chat);
 
     }
 
-    @GetMapping(SEND_EMAIL_FROM)
-    public Flux<Chat> getChayBySendEmailFrom(@PathVariable String sendEmailFrom, @PathVariable String sendEmailTo) {
+    @GetMapping(SEND_EMAIL_FROM + SEND_EMAIL_TO)
+    public Flux<Chat> getChatBySendEmailFrom(@PathVariable String sendEmailFrom, @PathVariable String sendEmailTo) {
         return this.chatService.findBySendEmailFrom(sendEmailFrom, sendEmailTo);
+    }
+
+    @GetMapping(ID_ID)
+    public Mono<Chat> getChatByID(@PathVariable String id) {
+        return this.chatService.findById(id);
+        //.map(ChatDto::ofValue);
+    }
+
+    @PutMapping(ID_ID)
+    public Mono<Chat> addMessage(@PathVariable String id, @RequestBody Chat chat) {
+        return this.chatService.addMessage(id, chat);
     }
 }
