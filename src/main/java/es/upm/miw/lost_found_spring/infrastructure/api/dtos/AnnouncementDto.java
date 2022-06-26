@@ -5,7 +5,6 @@ import es.upm.miw.lost_found_spring.domain.model.Category;
 import es.upm.miw.lost_found_spring.domain.model.Type;
 import lombok.*;
 
-//@Data
 @Getter
 @Setter
 @NoArgsConstructor

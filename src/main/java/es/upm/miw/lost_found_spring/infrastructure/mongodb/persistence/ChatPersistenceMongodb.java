@@ -50,7 +50,7 @@ public class ChatPersistenceMongodb implements ChatPersistence {
                 }).then(this.messageReactive.save(messageEntity1))
                 .then(this.userReactive.findByEmail(chat.getSendEmailTo()))
                 .switchIfEmpty(Mono.error(
-                        new NotFoundException("Non existing user:To2 " + chat.getSendEmailTo())))
+                        new NotFoundException("Non existing user: " + chat.getSendEmailTo())))
                 .map(userEntity1 ->
                 {
                     chatEntity.setUserNamesTo(userEntity1.getUserName());
@@ -64,9 +64,7 @@ public class ChatPersistenceMongodb implements ChatPersistence {
     @Override
     public Flux<Chat> findBySendEmailFrom(String sendEmailFrom, String sendEmailTo) {
         return this.chatReactive.findBySendEmailFromOrSendEmailTo(sendEmailFrom, sendEmailTo)
-                .switchIfEmpty(Mono.error(
-                        new NotFoundException("Non existing user:To2 " + sendEmailFrom + sendEmailTo)))
-
+                .switchIfEmpty(Mono.empty())
                 .map(ChatEntity::toChat);
     }
 
