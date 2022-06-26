@@ -51,6 +51,8 @@ public class DatabaseSeederDev {
         LogManager.getLogger(this.getClass()).warn("------- Delete All -------");
         this.userDao.deleteAll();
         this.announcementDao.deleteAll();
+        this.messageDao.deleteAll();
+        this.chatDao.deleteAll();
         this.databaseStarting.initialize();
     }
 
